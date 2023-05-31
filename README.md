@@ -8,6 +8,12 @@ Install
 - [cobra cli](https://github.com/spf13/cobra-cli/blob/main/README.md)
 
 ```bash
+# copy conftest cli under pkg/cli and name it as `conftest`.
+https://github.com/open-policy-agent/conftest/releases
+
+# run a command without building
+go run main.go test
+
 # build cli
 go build -o dist/compliance-cli
 

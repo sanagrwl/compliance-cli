@@ -1,2 +1,4 @@
 # generated
 dist/
+conftest-cli
+pkg/cli/conftest

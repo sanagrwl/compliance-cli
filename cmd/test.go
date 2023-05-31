@@ -6,6 +6,11 @@ package cmd
 import (
 	"fmt"
 
+	// "os"
+	// "os/exec"
+
+	"github.com/sanagrwl/compliance-cli/pkg/cli"
+	_ "github.com/sanagrwl/compliance-cli/pkg/cli"
 	"github.com/spf13/cobra"
 )
 
@@ -21,6 +26,8 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("test called")
+		// _ = os.WriteFile("conftest", cli.Conftest, 0755)
+		cli.ExecConftest()
 	},
 }
 
