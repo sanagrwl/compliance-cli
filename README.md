@@ -7,6 +7,14 @@ Install
 - [go lang](https://go.dev/)
 - [cobra cli](https://github.com/spf13/cobra-cli/blob/main/README.md)
 
+### CLI Commands:
+
+#### test
+- Downloads conftest cli
+- Downloads policies for docker from conftest github repo
+- Runs it against Dockerfile.test
+
+
 ```bash
 # copy conftest cli under pkg/cli and name it as `conftest`.
 https://github.com/open-policy-agent/conftest/releases
