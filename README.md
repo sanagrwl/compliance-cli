@@ -6,18 +6,26 @@ CLI to check if code, docker images etc are compliant based on policies.
 Install
 - [go lang](https://go.dev/)
 - [cobra cli](https://github.com/spf13/cobra-cli/blob/main/README.md)
+- [conftest cli](https://github.com/open-policy-agent/conftest/releases)
 
 ### CLI Commands:
 
 #### test
-- Downloads conftest cli
-- Downloads policies from [conftest examples](https://github.com/open-policy-agent/conftest/tree/master/examples)
+- Downloads conftest cli under `<repo>/downloads` folder
+- Downloads policies from registry
 - Runs the tests and displays results
 
 
 ```bash
-# copy conftest cli under pkg/cli and name it as `conftest`.
-https://github.com/open-policy-agent/conftest/releases
+# Run docker registry for conftest policies
+docker run -d --rm -p 8080:5000 --name registry registry:latest
+
+# policies
+conftest push --policy policies localhost:8080/policies:latest
+
+# test policies in registry
+conftest pull localhost:8080/policies:latest --policy foo
+ls foo/policies
 
 # run a command without building
 go run main.go test

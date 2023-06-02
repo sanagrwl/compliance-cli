@@ -47,7 +47,7 @@ func zipDownloadPath() string {
 }
 
 func policiesDir() string {
-	return filepath.Join(cliDir(), "policies")
+	return filepath.Join(downloadsDir(), "policies")
 }
 
 func cliLatestVersion() string {
@@ -136,10 +136,7 @@ func latestCLIExists() bool {
 
 func downloadPolicies() {
 	policyDirRelativePath := strings.ReplaceAll(policiesDir(), workingDir(), "")
-	policyUrl := "https://raw.githubusercontent.com/open-policy-agent/conftest/master/examples/docker/policy/images.rego"
-	execCLI("pull", policyUrl, "--policy", policyDirRelativePath)
-
-	policyUrl = "https://raw.githubusercontent.com/open-policy-agent/conftest/master/examples/kustomize/policy/base.rego"
+	policyUrl := "localhost:8080/policies"
 	execCLI("pull", policyUrl, "--policy", policyDirRelativePath)
 }
 
