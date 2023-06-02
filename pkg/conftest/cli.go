@@ -138,6 +138,9 @@ func downloadPolicies() {
 	policyDirRelativePath := strings.ReplaceAll(policiesDir(), workingDir(), "")
 	policyUrl := "https://raw.githubusercontent.com/open-policy-agent/conftest/master/examples/docker/policy/images.rego"
 	execCLI("pull", policyUrl, "--policy", policyDirRelativePath)
+
+	policyUrl = "https://raw.githubusercontent.com/open-policy-agent/conftest/master/examples/kustomize/policy/base.rego"
+	execCLI("pull", policyUrl, "--policy", policyDirRelativePath)
 }
 
 func execCLI(cmdArgs ...string) string {

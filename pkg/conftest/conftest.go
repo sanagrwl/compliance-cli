@@ -25,4 +25,8 @@ func ExecConftest() {
 	fmt.Println(result[0]["filename"])
 	fmt.Println(result[0]["failures"])
 
+	fmt.Println("Testing deployment.yaml")
+	result = testCompliance(filepath.Join(workingDir(), "deployment.yaml"))
+	fmt.Println(result[0]["filename"])
+	fmt.Println(result[0]["failures"])
 }
