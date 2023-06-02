@@ -152,7 +152,7 @@ func execCLI(cmdArgs ...string) (string, error) {
 }
 
 func testCompliance(filepath string) []map[string]interface{} {
-	out, err := exec.Command(cliPath(), "test", filepath, "--policy", policiesDir(), "--no-fail", "--output", "json").CombinedOutput()
+	out, err := exec.Command(cliPath(), "test", filepath, "--policy", policiesDir(), "--all-namespaces", "--no-fail", "--output", "json").CombinedOutput()
 	if err != nil {
 		if strings.Contains(string(out), "unknown parser") {
 			return nil
