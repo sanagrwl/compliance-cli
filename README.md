@@ -13,7 +13,7 @@ Install
 #### test
 - Downloads conftest cli under `<repo>/downloads` folder
 - Downloads policies from registry
-- Runs the tests and displays results
+- Runs policy checks against any supported file by conftest recursively
 
 
 ```bash
@@ -22,10 +22,6 @@ docker run -d --rm -p 8080:5000 --name registry registry:latest
 
 # policies
 conftest push --policy policies localhost:8080/policies:latest
-
-# test policies in registry
-conftest pull localhost:8080/policies:latest --policy foo
-ls foo/policies
 
 # run a command without building
 go run main.go test

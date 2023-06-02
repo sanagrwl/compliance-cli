@@ -129,31 +129,38 @@ func latestCLIExists() bool {
 
 	makeCLIExecutable()
 	latestVersion := cliLatestVersion()
-	out := execCLI("-v")
+	result, err := execCLI("-v")
+	if err != nil {
+		log.Fatalln(result)
+	}
 
-	return strings.Contains(out, latestVersion)
+	return strings.Contains(result, latestVersion)
 }
 
 func downloadPolicies() {
 	policyDirRelativePath := strings.ReplaceAll(policiesDir(), workingDir(), "")
 	policyUrl := "localhost:8080/policies"
-	execCLI("pull", policyUrl, "--policy", policyDirRelativePath)
+	result, err := execCLI("pull", policyUrl, "--policy", policyDirRelativePath)
+	if err != nil {
+		log.Fatalln(result)
+	}
 }
 
-func execCLI(cmdArgs ...string) string {
-	out, err := exec.Command(cliPath(), cmdArgs...).Output()
-	if err != nil {
-		log.Fatalln(err)
-	}
-	return string(out)
+func execCLI(cmdArgs ...string) (string, error) {
+	out, err := exec.Command(cliPath(), cmdArgs...).CombinedOutput()
+	return string(out), err
 }
 
 func testCompliance(filepath string) []map[string]interface{} {
-	out, err := exec.Command(cliPath(), "test", filepath, "--policy", policiesDir(), "--no-fail", "--output", "json").Output()
+	out, err := exec.Command(cliPath(), "test", filepath, "--policy", policiesDir(), "--no-fail", "--output", "json").CombinedOutput()
 	if err != nil {
-		log.Println(string(out))
-		log.Fatalln(err)
+		if strings.Contains(string(out), "unknown parser") {
+			return nil
+		}
+		log.Fatalln(string(out))
 	}
+	// log.Println(string(out))
+
 	var result []map[string]interface{}
 
 	json.Unmarshal(out, &result)
