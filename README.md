@@ -11,8 +11,8 @@ Install
 
 #### test
 - Downloads conftest cli
-- Downloads policies for docker from conftest github repo
-- Runs it against Dockerfile.test
+- Downloads policies from [conftest examples](https://github.com/open-policy-agent/conftest/tree/master/examples)
+- Runs the tests and displays results
 
 
 ```bash
