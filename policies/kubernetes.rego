@@ -1,4 +1,4 @@
-package main
+package cloud_compliance
 
 deny[msg] {
 	input.kind = "Deployment"

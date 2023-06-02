@@ -151,7 +151,19 @@ func execCLI(cmdArgs ...string) (string, error) {
 	return string(out), err
 }
 
-func testCompliance(filepath string) []map[string]interface{} {
+type ConftestMsg struct {
+	Msg string `json:"msg"`
+}
+
+type ConftestResult struct {
+	Filename  string        `json:"filename"`
+	Namespace string        `json:"namespace"`
+	Successes int           `json:"successes"`
+	Warnings  []ConftestMsg `json:"warnings"`
+	Failures  []ConftestMsg `json:"failures"`
+}
+
+func testCompliance(filepath string) []ConftestResult {
 	out, err := exec.Command(cliPath(), "test", filepath, "--policy", policiesDir(), "--all-namespaces", "--no-fail", "--output", "json").CombinedOutput()
 	if err != nil {
 		if strings.Contains(string(out), "unknown parser") {
@@ -161,7 +173,7 @@ func testCompliance(filepath string) []map[string]interface{} {
 	}
 	// log.Println(string(out))
 
-	var result []map[string]interface{}
+	result := []ConftestResult{}
 
 	json.Unmarshal(out, &result)
 	return result

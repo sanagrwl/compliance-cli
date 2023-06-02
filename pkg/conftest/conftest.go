@@ -15,8 +15,32 @@ func init() {
 		makeCLIExecutable()
 		fmt.Println(fmt.Sprintf("Latest conftest CLI installed at %s", cliDir()))
 	}
-	fmt.Println("Downloading policies")
+	fmt.Println("Downloading policies\n")
 	downloadPolicies()
+}
+
+func printMsgs(msgType string, msgs []ConftestMsg) {
+	if msgs == nil && len(msgs) == 0 {
+		return
+	}
+
+	fmt.Println(msgType)
+	for i := 0; i < len(msgs); i++ {
+		fmt.Printf("%v: %s", i+1, msgs[0].Msg)
+	}
+}
+
+func printResults(results []ConftestResult) {
+	for i := 0; i < len(results); i++ {
+		result := results[i]
+		if len(result.Warnings) > 0 || len(result.Failures) > 0 {
+			fmt.Printf("File: %s\n", results[0].Filename)
+			fmt.Printf("Namespace: %s\n", result.Namespace)
+			printMsgs("Failures:", result.Failures)
+			printMsgs("Warnings:", result.Warnings)
+			fmt.Println("\n")
+		}
+	}
 }
 
 func testAllRepoFiles(root string) error {
@@ -26,18 +50,9 @@ func testAllRepoFiles(root string) error {
 		}
 
 		if !f.IsDir() {
-			result := testCompliance(path)
-			if result != nil {
-				fmt.Println("File: %s", result[0]["filename"])
-				failures := result[0]["failures"]
-				if failures != nil {
-					fmt.Println("Failure: %s", failures)
-				}
-				warnings := result[0]["warnings"]
-				if warnings != nil {
-					fmt.Println("Warnings: %s", warnings)
-				}
-
+			results := testCompliance(path)
+			if results != nil {
+				printResults(results)
 			}
 
 		}
