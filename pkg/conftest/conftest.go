@@ -15,7 +15,7 @@ func init() {
 		makeCLIExecutable()
 		fmt.Println(fmt.Sprintf("Latest conftest CLI installed at %s", cliDir()))
 	}
-	fmt.Println("Downloading policies\n")
+	fmt.Println("Downloading policies")
 	downloadPolicies()
 }
 
@@ -38,7 +38,7 @@ func printResults(results []ConftestResult) {
 			fmt.Printf("Namespace: %s\n", result.Namespace)
 			printMsgs("Failures:", result.Failures)
 			printMsgs("Warnings:", result.Warnings)
-			fmt.Println("\n")
+			fmt.Print("\n\n")
 		}
 	}
 }
